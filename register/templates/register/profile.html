@@ -1,0 +1,71 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item">Trang chủ</li>
+        <li class="breadcrumb-item">Người dùng</li>
+        <li class="breadcrumb-item active">Bạn bè</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="container-fluid">
+    <div id="ui-view" style="opacity: 1;">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-12">
+                    <div class="social-box" style="height:110%">
+                        <div class="card">
+                            <div class="card-body">
+                                <img src="{{ logged_user.img.url }}" class="img-avatar m-4" alt="{{ user }}" width="20%">
+                                <br>
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="custom-file col-md-4">
+                                        {{ img_form.img }}
+                                        <label class="custom-file-label btn-sm" for="validatedCustomFile">Cập nhật ảnh...</label>
+                                        <div>
+                                            <button class="btn btn-primary btn-sm my-2" type="submit">Đăng ảnh</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <ul class="mt-4">
+                                    <li>
+                                        <strong>{{ logged_user.user.project_set.all.count }}</strong>
+                                        <span>dự án</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="social-box" style="">
+                        <ul class="mt-3">
+                            <li><span>Công ty: <a href="">{{ logged_user.company }}</a></span></li>
+                            <li><span>Dự án:
+                                    {% for project in logged_user.user.project_set.all %}
+                                        <a href="">{{ project.name }},</a>
+                                    {% endfor %}
+                                </span>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li><span>Tên: <a href="">{{ logged_user.user.get_full_name }}</a></span></li>
+                            <li><span>E-mail: <span class="text-blue text-lowercase">{{ logged_user.user.email }}</span></span>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li><span>Ngày tham gia: <span class="text-blue">{{ logged_user.user.date_joined }}</span></span></li>
+                            <li><span>Lần đăng nhập cuối: <span class="text-blue">{{ logged_user.user.last_login }}</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
