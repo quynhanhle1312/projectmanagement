@@ -1,0 +1,129 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item">Trang chủ</li>
+        <li class="breadcrumb-item">Dự án</li>
+        <li class="breadcrumb-item active">Công việc mới</li>
+{% endblock breadcrumb%}
+
+
+
+
+
+{% block content %}
+<div class="container animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="col-7">
+                <div class="card-group">
+                    <div class="card p-4 mb-5">
+                        <div class="card-body">
+                            {% if created %}
+                              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                  </button>
+                                  Chúc mừng, đầu việc mới của bạn đã được tạo !
+                              </div>
+                            {% endif %}
+                                {% csrf_token %}
+                                <h1>Đầu việc</h1>
+                                <p class="text-muted">Tạo đầu việc mới ở đây</p>
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label class="col-form-label">Dự án</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-puzzle-piece"></i></span>
+                                            </div>
+                                            {{ form.project }}
+                                            {% if form.project.errors %}
+                                                <ol>
+                                                {% for error in form.project.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Giao nhiệm vụ. <i>Bấm để chọn</i></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                                            </div>
+                                            {{ form.assign }}
+                                            {% if form.assign.errors %}
+                                                <ol>
+                                                {% for error in form.assign.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Tên đầu việc</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-align-center"></i></span>
+                                            </div>
+                                            {{ form.task_name }}
+                                            {% if form.task_name.errors %}
+                                                <ol>
+                                                {% for error in form.task_name.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Hiện trạng</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-circle"></i></span>
+                                            </div>
+                                            {{ form.status }}
+                                            {% if form.status.errors %}
+                                                <ol>
+                                                {% for error in form.status.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label">Hạn nộp</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                            {{ form.due }}
+                                        </div>
+
+                                        {% if form.due.errors %}
+                                                <ol>
+                                                {% for error in form.due.errors %}
+                                                    <li><strong>{{ error|escape }}</strong></li>
+                                                {% endfor %}
+                                                </ol>
+                                            {% endif %}
+                                    </div>
+
+                                    <div class="">
+                                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-dot-circle-o"></i> Gửi</button>
+                                    </div>
+                                </form>
+                            {{ form.errors }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
